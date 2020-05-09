@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  
+ <!-- <script type="text/javascript" src="javascripts/angular.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script> 
+  <!-- <script type="text/javascript" src="javascripts/angular.js"></script> -->
+ 
+  </head>
+  <body ng-app="myApp">
+  	<div ng-controller="myController">
+  	<form class="form-group">
+  		<h2 class="text-center">REGISTRATION FORM</h2>
+  		<div class="col-md-4 col-md-offset-4">
+  		<label>Name:</label>
+  		<input class="form-control"  type="text" ng-model="users.name" ><br><br>
+  		<label>RollNo:</label>
+  		<input class="form-control" type="text" ng-model="users.roll" ><br><br>
+  		<label>Branch:</label>
+  		<input class="form-control" type="text" ng-model="users.branch" ><br><br>
+  		<label>College:</label>
+  		<input class="form-control" type="text" ng-model="users.college" ><br>
+  		<input class="btn btn-info" type="submit" ng-click="saveData(users)">
+  		<br>
+  		<br>
+  	</div>
+  	</form>
+  	<br>
+  	<br>
+  <div>
+  <table class="table table-bordered">
+  	<thead>
+  		<tr>
+  		<th>SNO</th>
+  		<th>Id</th>
+  		<th>NAME</th>
+  		<th>ROLL NO</th>
+  		<th>BRANCH</th>
+  		<th>COLLEGE</th>
+  		<th>REMOVE</th>
+  		<th>EDIT</th>
+  	</tr>
+  	</thead>
+  	<tbody>
+  		<tr ng-repeat="users in person">
+  			<td>{{$index+1}}</td>
+  			<td>{{users._id}}</td>
+  			<td>{{users.name}}</td>
+  			<td>{{users.roll}}</td>
+  			<td>{{users.branch}}</td>
+  			<td>{{users.college}}</td>
+  			<td>
+  				<!-- <i class="btn btn-danger glyphicon glyphicon-trash" ng-click="delData($index,users)"></i> -->
+
+  				 <i class="btn btn-danger glyphicon glyphicon-trash" ng-click="delData(users)"></i>
+
+  			</td>
+  			<td>
+  				<i class="btn btn-primary glyphicon glyphicon-edit"  ng-show="editData"  ng-click="editData()"></i>
+  				<i class="btn btn-primary glyphicon glyphicon-ok"  ng-hide="editData"  ng-click="updateData(users)"></i>
+
+  			</td>
+
+  		</tr>
+  	</tbody>
+  </table>
+</div>
+</div>
+  </body>
+<script type="text/javascript">
+	var app=angular.module('myApp',[]);
+app.controller('myController',['$scope','$http',function($scope,$http){
+
+	 $http({
+		 	method:'GET',
+		 	url:'/getdata'
+		 }).then(function success(response){
+		 	$scope.person=response.data;
+		 },function error(response){
+		 	 alert('error! in submission')
+		 })
+		 
+	$scope.saveData=function(users){
+		 // $scope.person.push(users);
+		 console.log($scope.users);
+		
+         
+		$http({
+		method:'POST',
+		url:'/postdata',
+		data:$scope.users
+	}).then(function success(response){
+		 $scope.person.push(response.data);
+		  $scope.users={}
+		alert('submitted successfully')
+	},function error(response){
+        alert('error! in submission')
+	})
+	 // $scope.users={}
+
+	}
+	$scope.delData=function(users){
+		console.log(users._id)
+		$http({
+			method:'Delete',
+			url:'/deldata/'+users._id
+		}).then(function success(response){
+			alert("deleted successfully")
+			var index=$scope.person.indexOf(users)
+			$scope.person.splice(index,1)
+		},function error(response){
+			alert("error! in deletion")
+		})
+
+	}
+   $scope.editData=function(users){
+   	$scope.editData=true;
+   }
+   $scope.updateData=function(users){
+   	$scope.ediData=false;
+   }
+	// $scope.delData=function(index,users){
+	// 	$scope.person.splice(index,1)
+	// }
+
+}])
+</script>
+</html>
