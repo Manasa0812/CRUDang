@@ -5,7 +5,8 @@ var db=monk('localhost:27017/codeheat');
 var col=db.get('ang');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+
+router.get('/index', function(req, res, next) {
   res.render('index');
 });
 router.get('/getdata',function(req,res){
@@ -43,5 +44,15 @@ router.delete('/deldata/:id',function(req,res){
 		}
 	})
 });
+//----------------------------------------------login_sinup page------------------------------------
 
+router.get('/',function(req,res){
+	res.render('login_signup');
+})
+
+
+//-------------------------------------------forgot page--------------------------------
+router.get('/forgot',function(req,res){
+	res.render('forgot')
+})
 module.exports = router;
