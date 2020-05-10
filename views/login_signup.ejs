@@ -9,49 +9,85 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script> 
+
 </head>
 <style type="text/css"></style>
 <body>
-	<div class="container ">
-		<div >
+	<div class="container" ng-app="App">
+		<div>
 			<ul class="nav nav-tabs">
 				<li><a href="#signup" data-toggle="tab">SignUp</a></li>
 				<li><a href="#login" data-toggle="tab">login</a></li>
 			</ul>
 		</div>
-		<div class="tab-content">
-			<div id="signup" class="tab tab-pane active " >
+		<div class="tab-content" >
+			<div id="signup" class="tab tab-pane active" ng-controller="signupController" >
 				<div class="col-md-4 col-md-offset-4" style="border:1px solid grey;box-shadow:10px 10px 10px 10px;margin-top:40px; ">
 				<form class="form-group" >
 					<h1 class="text-center">SignUp</h1>
 					<hr>
 					<label>Username</label>
-					<input type="text" ng-model="" class="form-control" required=""><br><br>
+					<input type="text" ng-model="sign.name" class="form-control" required=""><br><br>
 					<label>Email:</label>
-					<input type="email" ng-model="" class="form-control" required=""><br><br>
+					<input type="email" ng-model="sign.email" class="form-control" required=""><br><br>
 					<label>Password:</label>
-					<input type="password" ng-model="" class="form-control" required=""><br><br>
-					<input class="btn btn-info" type="submit" value="Submit" ng-click="">
+					<input type="password" ng-model="sign.pass" class="form-control" required=""><br><br>
+					<input class="btn btn-info" type="submit" value="Submit" ng-click="signup(sign)">
 				</form>
 			</div>
 			</div>
-			<div id="login" class="tab tab-pane ">
+			<div id="login" class="tab tab-pane" ng-controller="loginController">
 				<div class="col-md-4 col-md-offset-4" style="border:1px solid grey;box-shadow:10px 10px 10px 10px;margin-top:40px;">
 					<form class="form-group">
 						<h1 class="text-center" >LOGIN</h1>
 						<hr>
 						<label>Email:</label>
-						<input  class="form-control" type="email" ng-model="" required=""><br><br>
+						<input  class="form-control" type="email" ng-model="log.email" required=""><br><br>
 						<label>Password:</label>
-						<input class="form-control"  type="password" ng-model="" required=""><br>
+						<input class="form-control"  type="password" ng-model="log.pass" required=""><br>
 						<a href="/forgot">forgot password?</a><br><br>
-						<input   class="btn btn-info" type="submit" value="submit" ng-click="">
+						<input   class="btn btn-info" type="submit" value="submit" ng-click="login(log)">
 					</form>
 				</div>
 			</div>
 
 		</div>
 	</div>
-	
 </body>
+<script type="text/javascript">
+var app=angular.module('App',[])
+app.controller('signupController',['$scope','$http',function($scope,$http){
+	$scope.signup=function(sign){
+		// console.log($scope.sign)
+	$http({
+		method:'post',
+		url:'/postsignup',
+		data:$scope.sign
+	}).then(function success(response){
+		alert("registration is successfull");
+		$scope.sign={};
+	},function error(response){
+		alert("error occured in registration")
+	}
+	)}
+}])
+
+app.controller('loginController',['$scope','$http','$window',function($scope,$http,$window){
+	$scope.login=function(log){
+$http({
+	method:'post',
+	url:'/postlogin',
+	data:$scope.log
+}).then(function success(response){
+	alert("logged in successfully");
+	$window.location.href="/sendlog"
+},function error(response){
+	alert("invalid username or password");
+	$scope.log={}
+})
+
+}
+}])
+</script>
 </html>
