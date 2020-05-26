@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manu</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  
+ <!-- <script type="text/javascript" src="javascripts/angular.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script> 
+  <!-- <script type="text/javascript" src="javascripts/angular.js"></script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style type="text/css">
+  	.container{
+  		border: 1px solid  #00A1BF;
+  		box-shadow: 8px 8px 8px 8px;
+  		background-color: #00A1BF;
+  	}
+  </style>
+ </head>
+ <body>
+ 	<div class="container col-md-4 col-md-offset-4">
+ 		<form class="form-group" action="/certi-upload" method="post" enctype="multipart/form-data">
+ 			<input type="file" name="certi"><br><br>
+ 			<textarea cols="60" rows="10" value="type something about your achievement" name="descript"></textarea>
+ 			<input type="submit" value="Save File" >
+ 			<br><br>
+ 	                    <div>
+                        <% for (var i =0; i < b.length;  i++ ) { %>
+                                  <img src="uploads/<%=b[i].image%>" height="480" width="480">
+                                  <br>
+                                  <%=b[i].des%><br>
+                                  <input type="text" class="form-control" placeholder="add a comment" name="com"><br>
+                          <% } %>
+                          </div>
+
+ 		</form>
+ 	</div>
+ </body>
+ <script type="text/javascript">
+ </script>
+ </html>

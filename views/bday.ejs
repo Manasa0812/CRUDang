@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manu</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  
+ <!-- <script type="text/javascript" src="javascripts/angular.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script> 
+  </head>
+  <body>
+  	<div class="container" ng-app="myapp">
+  		<div ng-controller="bdayController">
+  		<div  class="col-md-4 col-md-offset-4">
+  	<form  class="form-group" >
+  		<h1 class="text-center">FORM</h1>
+  		<label>Name:</label>
+  		<input type="text" ng-model="day.name" class="form-control"><br><br>
+        <label>Email:</label>
+        <input type="email" ng-model="day.email" class="form-control"><br><br>
+        <label>Mobile:</label>
+        <input type="number" ng-model="day.mobile" class="form-control"><br><br>
+        <label>Date Of Birth:</label>
+        <input type="date" ng-model="day.dob" class="form-control"><br><br>
+        <input type="submit" ng-click="bdata(day)" class="btn btn-info">
+  	</form>
+</div>
+              <!-- ------------------------------------------------------------------YESTERDAY BIRTHDAY TABLE---------------------------------------------------------------
+ -->
+ <br>
+<br>
+<div class="col-md-4 col-md-offset-4">
+	<h3 class="text-center">Yesterday Birthdays</h3>
+  	<table class="table table-bordered">
+  		<thead >
+  			<tr>
+  				<th>SNo:</th>
+  				<th>Name:</th>
+  				<th>Email:</th>
+  				<th>Date Of Birth:</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<tr ng-repeat="frnds in birth_yes">
+  				<td>{{$index+1}}</td>
+  				<td>{{frnds.name}}</td>
+  				<td>{{frnds.email}}</td>
+  				<td>{{frnds.dob}}</td>
+  			</tr>
+  		</tbody>
+  	</table>
+  	</div>  
+
+  	                  <!-- --------------------------------------------------------------  TODAY BIRTHDAYS TABLE------------------------------------------------------------------
+ -->
+  	<div class="col-md-4 col-md-offset-4" >
+	<h3 class="text-center">Today Birthdays</h3>
+  	<table class="table table-bordered">
+  		<thead >
+  			<tr>
+  				<th>SNo:</th>
+  				<th>Name:</th>
+  				<th>Email:</th>
+  				<th>Date Of Birth:</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<tr ng-repeat="frnds in birth">
+  				<td>{{$index+1}}</td>
+  				<td>{{frnds.name}}</td>
+  				<td>{{frnds.email}}</td>
+  				<td>{{frnds.dob}}</td>
+  			</tr>
+  		</tbody>
+  	</table>
+  	</div><!-- 
+                        ------------------------------------------------- -------------------- TOMORROW BIRTHDAY TABLE -------------------------------------------------------> 
+
+<div class="col-md-4 col-md-offset-4" >
+	<h3 class="text-center">Tomorrow Birthdays</h3>
+  	<table class="table table-bordered">
+  		<thead >
+  			<tr>
+  				<th>SNo:</th>
+  				<th>Name:</th>
+  				<th>Email:</th>
+  				<th>Date Of Birth:</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<tr ng-repeat="frnds in birth_tom">
+  				<td>{{$index+1}}</td>
+  				<td>{{frnds.name}}</td>
+  				<td>{{frnds.email}}</td>
+  				<td>{{frnds.dob}}</td>
+  			</tr>
+  		</tbody>
+  	</table>
+  	</div>
+
+
+  </div>
+  </div>
+  </body>
+  <script type="text/javascript">
+  	var app=angular.module('myapp',[])
+  	app.controller('bdayController',['$scope','$http',function($scope,$http){
+  		$scope.bdata=function(day){
+  		$http({
+  			method:'post',
+  			url:'/postbday',
+  			data:$scope.day
+  		}).then(function success(response){
+  			alert("submitted successfully");
+  			$scope.day={};
+  		},function error(response){
+  			alert("error in submission");
+  		});
+  	}
+  	 $http({
+         	method:'get',
+         	url:'/getbday'
+         }).then(function success(response){
+         	$scope.birth=response.data
+         },function error(response){
+         	alert("error occured");
+         });
+
+
+        $http({
+        	method:'get',
+        	url:'/getyes'
+        }).then(function success(response){
+        	$scope.birth_yes=response.data
+        },function error(response){
+        	alert("error occured");
+        })
+
+
+        $http({
+        	method:'get',
+        	url:'/gettom'
+        }).then(function success(response){
+            $scope.birth_tom=response.data
+        },function error(response){
+        	alert("error occured")
+        })
+     }]);
+
+
+  </script>
+  </html>

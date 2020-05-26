@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manu</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  
+ <!-- <script type="text/javascript" src="javascripts/angular.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script> 
+  <!-- <script type="text/javascript" src="javascripts/angular.js"></script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style type="text/css">
+  	.container{
+  		border: 1px solid black;
+  		box-shadow: 8px 8px 8px 8px;
+  		background-color: black
+  	}
+  	i{
+  		color: white;
+  		font-size: 20px;
+  	}
+  	.fa{
+
+  	}
+   
+  </style>
+ </head>
+ <body>
+ 	<div class="container col-md-4 col-md-offset-4">
+ 		<form class="form-group" action="/im-upload" method="post" enctype="multipart/form-data">
+ 			<input type="file" name="image"><br><br>
+ 			<textarea cols="60" rows="10" value="type something" name="des"></textarea>
+ 			<input type="submit" value="Save File" >
+ 			<br><br>
+ 	                    <div class="insta ">
+                        <% for (var i =1; i < a.length;  i++ ) { %>
+                                  <img src="uploads/<%=a[i].image%>" height="200" width="480">
+                                  <br>
+                                  <i class="fa fa-heart-o fa-2x " aria-hidden="true" id="empty"></i>
+                                  <i class="fa fa-heart fa-2x" aria-hidden="true" id="love" style="color: red"></i>&nbsp;&nbsp;
+                                  <i class="fa fa-comment-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;
+                                  <i class="fa fa-paper-plane-o fa-2x" aria-hidden="true"></i><br>
+                                  <%=a[i].des%><br>
+                                  <input type="text" class="form-control" placeholder="add a comment" name=""><br>
+                          <% } %>
+                          </div>
+
+ 		</form>
+ 	</div>
+ </body>
+ <script type="text/javascript">
+ 	$(document).ready(function(){
+ 		$("#love").hide();
+ 		$("#empty").click(function(){
+ 			$("#love").show();
+ 			$("#empty").hide();
+ 		});
+ 		$("#love").click(function(){
+ 			$("#love").hide();
+ 			$("#empty").show();
+ 		});
+ 	})
+ </script>
+ </html>

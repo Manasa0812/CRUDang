@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script> 
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css"></style>
+ </head>
+ <body>
+ 	<div ng-app="myApp">
+      <div ng-controller="pdfController" class="col-md-4 col-md-offset-4">
+ 	    <form class="form-group">
+ 	        <img src="<%= a %>">
+ 	        <br>
+ 	        <br>
+ 	        <div class="col-md-6">
+ 	        <label class="label-control">Name:</label>
+ 	        <input type="text" ng-model="pdft.txt" class="form-control" style="border-radius: 20px">
+ 	        <br>
+ 	        <br>
+ 	         <label>Email:</label>
+ 	        <input type="email" ng-model="pdft.mail"  class="form-control" style="border-radius: 20px">
+ 	        <br>
+ 	        <br>
+ 	        <label>Mobile:</label>
+ 	        <input type="num" ng-model="pdft.mob"  class="form-control" style="border-radius: 20px">
+ 	        <br>
+ 	        <br>
+ 	        <button class="btn btn-info" type="submit" ng-click="pdfs(pdft)" >Download Pdf</button>
+ 	        </div>
+ 	    </form>
+ 	   </div>
+ 	</div>
+ </body>
+ <script type="text/javascript">
+ 	var app=angular.module('myApp',[])
+ 	app.controller('pdfController',function($scope){
+ 		$scope.pdfs=function(pdft){
+ 		var doc = new jsPDF()
+ 		// var data={
+   //        n:$scope.pdft.txt,
+   //        em:$scope.pdft.mail,
+   //        mob:$scope.pdft.mob
+ 		// }
+ 		 // console.log($scope.data)
+ 		doc.text($scope.pdft.txt,$scope.pdft.mail, 5, 5)
+        doc.save('a4.pdf')
+}
+ 	})
+ </script>
+ </html>
